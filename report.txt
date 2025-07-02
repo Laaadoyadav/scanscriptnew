@@ -1,0 +1,7 @@
+Highlighted Version Found: 10.3.9
+Product       : Ciena 3930
+Version       : 10.3.9
+Advisory ID   : CIENA-ADV-2025-018
+Remediation   : Upgrade to SAOS version 10.4.1
+Mitigation    : Monitor traffic on management ports for anomalies
+----------------------------------------

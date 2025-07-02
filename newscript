@@ -1,0 +1,39 @@
+import re
+import json
+
+# Step 1: Read content from Osversion.txt
+with open("Osversion.txt", "r") as f:
+    content = f.read()
+
+# Step 2: Extract SAOS version numbers (e.g., "10.3.2")
+matches = re.findall(r"\b(?:SAOS|SOAS)[^\d]*(\d{1,2}\.\d{1,2}\.\d{1,2})\b", content, re.IGNORECASE)
+extracted_versions = set(matches)  # Remove duplicates
+
+# Step 3: Load advisory database from data.json
+with open("data.json", "r") as f:
+    advisory_data = json.load(f)
+
+# Step 4: Open report.txt in overwrite mode
+with open("report.txt", "w", encoding="utf-8") as report:
+    found_any = False
+
+    for version in extracted_versions:
+        matched = False
+        for entry in advisory_data:
+            if entry["product_version"] == version:
+                report.write(f"Highlighted Version Found: {version}\n")
+                report.write(f"Product       : {entry['product_name']}\n")
+                report.write(f"Version       : {entry['product_version']}\n")
+                report.write(f"Advisory ID   : {entry['advisory_id']}\n")
+                report.write(f"Remediation   : {entry['remediation']}\n")
+                report.write(f"Mitigation    : {entry['mitigation']}\n")
+                report.write("-" * 40 + "\n")
+                print(f"Advisory Found for Version: {version}")
+                matched = True
+                found_any = True
+        if not matched:
+            print(f"No advisory found for extracted version: {version}")
+
+    if not found_any:
+        report.write("No highlighted versions found.\n")
+        print("No highlighted versions found.")

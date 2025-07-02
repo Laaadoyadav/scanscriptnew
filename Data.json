@@ -1,0 +1,44 @@
+[
+  {
+    "advisory_id": "CIENA-ADV-2025-013",
+    "product_name": "Ciena 3926",
+    "product_version": "10.3.2",
+    "remediation": "Upgrade to SAOS version 10.4.0",
+    "mitigation": "Isolate the device from public networks"
+  },
+  {
+    "advisory_id": "CIENA-ADV-2025-014",
+    "product_name": "Ciena 5170",
+    "product_version": "10.2.1",
+    "remediation": "Apply hotfix patch 10.2.1p1",
+    "mitigation": "Restrict access to SSH and WebUI from internal networks only"
+  },
+  {
+    "advisory_id": "CIENA-ADV-2025-015",
+    "product_name": "Ciena 3928",
+    "product_version": "10.1.5",
+    "remediation": "Upgrade to SAOS version 10.2.0",
+    "mitigation": "Enable management ACLs to block unauthorized traffic"
+  },
+  {
+    "advisory_id": "CIENA-ADV-2025-016",
+    "product_name": "Ciena 6500",
+    "product_version": "10.3.0",
+    "remediation": "Install security release 10.3.1",
+    "mitigation": "Use out-of-band management whenever possible"
+  },
+  {
+    "advisory_id": "CIENA-ADV-2025-017",
+    "product_name": "Ciena 8700",
+    "product_version": "10.2.9",
+    "remediation": "Upgrade to SAOS version 10.3.2",
+    "mitigation": "Audit user accounts and enforce password rotation"
+  },
+  {
+    "advisory_id": "CIENA-ADV-2025-018",
+    "product_name": "Ciena 3930",
+    "product_version": "10.3.9",
+    "remediation": "Upgrade to SAOS version 10.4.1",
+    "mitigation": "Monitor traffic on management ports for anomalies"
+  }
+]
