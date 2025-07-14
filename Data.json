@@ -1,44 +1,92 @@
 [
-  {
-    "advisory_id": "CIENA-ADV-2025-013",
-    "product_name": "Ciena 3926",
-    "product_version": "10.3.2",
-    "remediation": "Upgrade to SAOS version 10.4.0",
-    "mitigation": "Isolate the device from public networks"
-  },
-  {
-    "advisory_id": "CIENA-ADV-2025-014",
-    "product_name": "Ciena 5170",
-    "product_version": "10.2.1",
-    "remediation": "Apply hotfix patch 10.2.1p1",
-    "mitigation": "Restrict access to SSH and WebUI from internal networks only"
-  },
-  {
-    "advisory_id": "CIENA-ADV-2025-015",
-    "product_name": "Ciena 3928",
-    "product_version": "10.1.5",
-    "remediation": "Upgrade to SAOS version 10.2.0",
-    "mitigation": "Enable management ACLs to block unauthorized traffic"
-  },
-  {
-    "advisory_id": "CIENA-ADV-2025-016",
-    "product_name": "Ciena 6500",
-    "product_version": "10.3.0",
-    "remediation": "Install security release 10.3.1",
-    "mitigation": "Use out-of-band management whenever possible"
-  },
-  {
-    "advisory_id": "CIENA-ADV-2025-017",
-    "product_name": "Ciena 8700",
-    "product_version": "10.2.9",
-    "remediation": "Upgrade to SAOS version 10.3.2",
-    "mitigation": "Audit user accounts and enforce password rotation"
-  },
-  {
-    "advisory_id": "CIENA-ADV-2025-018",
-    "product_name": "Ciena 3930",
-    "product_version": "10.3.9",
-    "remediation": "Upgrade to SAOS version 10.4.1",
-    "mitigation": "Monitor traffic on management ports for anomalies"
-  }
+    {
+        "product_version": "5.2.1",
+        "product_name": "SAOS-CoreSwitch",
+        "advisory_id": "ADV-2024-102",
+        "summary": "A critical vulnerability in the SNMP module allows remote code execution.",
+        "impact": "High - Can lead to full system compromise over the network.",
+        "remediation": "Upgrade to 5.2.3",
+        "mitigation": "Disable SNMP temporarily"
+    },
+    {
+        "product_version": "10.3.9",
+        "product_name": "SAOS-EdgeRouter",
+        "advisory_id": "ADV-2024-088",
+        "summary": "Buffer overflow in CLI input parser.",
+        "impact": "Medium - May allow privilege escalation.",
+        "remediation": "Apply patch 4.8.8",
+        "mitigation": "Restrict CLI access to trusted users"
+    },
+    {
+        "product_version": "6.1.0",
+        "product_name": "SAOS-DataCenter",
+        "advisory_id": "ADV-2024-120",
+        "summary": "Authentication bypass via malformed request payloads.",
+        "impact": "High - May allow unauthorized access.",
+        "remediation": "Upgrade to 6.1.2",
+        "mitigation": "Enable strict request validation"
+    },
+    {
+        "product_version": "5.3.2",
+        "product_name": "SAOS-CoreSwitch",
+        "advisory_id": "ADV-2024-103",
+        "summary": "Denial of service via malformed ICMP packets.",
+        "impact": "Low - Service interruption, no data loss.",
+        "remediation": "Update firewall rules",
+        "mitigation": "Limit ICMP traffic at network edge"
+    },
+    {
+        "product_version": "4.5.0",
+        "product_name": "SAOS-Gateway",
+        "advisory_id": "ADV-2023-067",
+        "summary": "Weak encryption used in VPN handshake.",
+        "impact": "High - VPN session hijacking possible.",
+        "remediation": "Upgrade to 4.5.2",
+        "mitigation": "Disable VPN until patched"
+    },
+    {
+        "product_version": "3.9.4",
+        "product_name": "SAOS-BranchRouter",
+        "advisory_id": "ADV-2023-045",
+        "summary": "Improper access controls on web interface.",
+        "impact": "Medium - May expose system configs.",
+        "remediation": "Apply hotfix BR-3.9.5",
+        "mitigation": "Disable web access externally"
+    },
+    {
+        "product_version": "5.0.0",
+        "product_name": "SAOS-WANEdge",
+        "advisory_id": "ADV-2024-091",
+        "summary": "Race condition in logging system.",
+        "impact": "Low - Causes random service restarts.",
+        "remediation": "Upgrade to 5.0.1",
+        "mitigation": "Disable verbose logging temporarily"
+    },
+    {
+        "product_version": "6.0.3",
+        "product_name": "SAOS-CoreSwitch",
+        "advisory_id": "ADV-2024-108",
+        "summary": "Cross-site scripting vulnerability in admin panel.",
+        "impact": "Medium - May allow session hijacking.",
+        "remediation": "Upgrade to 6.0.5",
+        "mitigation": "Restrict access to admin panel"
+    },
+    {
+        "product_version": "5.4.2",
+        "product_name": "SAOS-DataCenter",
+        "advisory_id": "ADV-2024-115",
+        "summary": "Credential leak in log files.",
+        "impact": "High - Exposes user credentials to unauthorized users.",
+        "remediation": "Patch with 5.4.3 and clear logs",
+        "mitigation": "Restrict access to log directories"
+    },
+    {
+        "product_version": "4.2.9",
+        "product_name": "SAOS-BranchRouter",
+        "advisory_id": "ADV-2023-032",
+        "summary": "Hardcoded SSH key in firmware.",
+        "impact": "High - Backdoor access risk.",
+        "remediation": "Upgrade to version 4.3.0",
+        "mitigation": "Disable SSH until upgraded"
+    }
 ]
