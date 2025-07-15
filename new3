@@ -1,0 +1,145 @@
+import re
+import json
+import sys
+import time
+from colorama import init, Fore, Style
+
+# Initialize colorama for cross-platform colored output
+init(autoreset=True)
+
+def banner():
+    print("\n\n\n")
+    print(Fore.BLUE + "=" * 80)
+    print("     Security Advisory – focused Vulnerability Extensible Scanner (SAVES)     ")
+    print("                          by Innovation Center                    ")
+    print(Fore.BLUE + "=" * 80)
+
+def get_ip():
+    ip = input("\nEnter the target machine IP address: ").strip()
+    print(f"Initiating scan for IP: {ip}\n")
+    return ip
+
+def read_os_version(file_path="Osversion.txt"):
+    print("Checking configuration and reading OS version file...")
+    try:
+        with open(file_path, "r") as f:
+            content = f.read()
+            for line in content.splitlines():
+                print(line.strip())
+                time.sleep(1)  # Simulate reading delay
+            print(" done!\n")
+            print("-----------------------------\n")
+            return content
+    except FileNotFoundError:
+        print(Fore.RED + f"Error: {file_path} not found.")
+        sys.exit(1)
+    except Exception as e:
+        print(Fore.RED + f"Unexpected error while reading {file_path}: {e}")
+        sys.exit(1)
+
+def simulate_scan():
+    print("Running scan", end="", flush=True)
+    for _ in range(5):
+        print(".", end="", flush=True)
+        time.sleep(0.5)
+    print(" done!\n")
+
+def extract_versions(content):
+    print("Analyzing system output to detect OS version...")
+    matches = re.findall(r"\b(?:SAOS|SOAS)[^\d]*(\d{1,2}\.\d{1,2}\.\d{1,2})\b", content, re.IGNORECASE)
+    return set(matches)
+
+def load_advisory_db(file_path="data.json"):
+    print("Loading advisory database...")
+    try:
+        with open(file_path, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(Fore.RED + f"Error: {file_path} not found.")
+        sys.exit(1)
+    except json.JSONDecodeError:
+        print(Fore.RED + "Error: Failed to parse advisory database (invalid JSON).")
+        sys.exit(1)
+
+def fetch_advisory(versions, advisory_data):
+    print("\nMatching OS versions with known advisories...\n")
+    found_any = False
+
+    try:
+        with open("report.txt", "w", encoding="utf-8") as report:
+            for version in versions:
+                matched = False
+                print(f"Detected OS Version: {version}")
+                for entry in advisory_data:
+                    if entry["product_version"] == version:
+                        print(Fore.GREEN + f"Advisory found for version {version}")
+                        report.write(f"OS Version       : {version}\n")
+                        report.write(f"Product Name     : {entry['product_name']}\n")
+                        report.write(f"Advisory ID      : {entry['advisory_id']}\n")
+                        report.write(f"Summary          : {entry.get('summary', 'N/A')}\n")
+                        report.write(f"Impact           : {entry.get('impact', 'N/A')}\n")
+                        report.write(f"Recommended Fix  : {entry['remediation']}\n")
+                        report.write(f"Mitigation Steps : {entry['mitigation']}\n")
+                        report.write("-" * 40 + "\n")
+                        matched = True
+                        found_any = True
+                        break
+                if not matched:
+                    print(Fore.RED + f"No advisory found for version: {version}")
+            if not found_any:
+                report.write("No relevant advisories found for the detected OS versions.\n")
+                print(Fore.RED + "No advisories found.")
+    except Exception as e:
+        print(Fore.RED + f"Error while writing report: {e}")
+        sys.exit(1)
+
+def print_report(file_path="report.txt"):
+    print(Fore.CYAN + "\n" + "=" * 40)
+    print(Style.BRIGHT + Fore.YELLOW + "         FINAL ADVISORY REPORT")
+    print(Fore.CYAN + "=" * 40 + "\n")
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+
+                if line.startswith("OS Version"):
+                    print(Fore.LIGHTWHITE_EX + line)
+                elif line.startswith("Product Name"):
+                    print(Fore.LIGHTWHITE_EX + line)
+                elif line.startswith("Advisory ID"):
+                    print(Fore.LIGHTWHITE_EX + line)
+                elif line.startswith("Summary"):
+                    print( Fore.LIGHTWHITE_EX + line)
+                elif line.startswith("Impact"):
+                    print("\n" +Fore.LIGHTWHITE_EX + line)
+                elif line.startswith("Recommended Fix"):
+                    print("\n" +Fore.LIGHTWHITE_EX + line)
+                elif line.startswith("Mitigation Steps"):
+                    print("\n" +Fore.LIGHTWHITE_EX + line)
+                elif line.startswith("-" * 10):
+                    print(Fore.LIGHTBLACK_EX + "-" * 40)
+                else:
+                    print(line)
+    except Exception as e:
+        print(Fore.RED + f"Error reading report: {e}")
+
+def main():
+    banner()
+    ip = get_ip()
+    simulate_scan()
+    content = read_os_version()
+    versions = extract_versions(content)
+
+    if not versions:
+        print(Fore.RED + "No SAOS/SOAS versions found in the scan result.")
+        sys.exit(0)
+
+    advisory_data = load_advisory_db()
+    fetch_advisory(versions, advisory_data)
+    print_report()
+
+    print(Fore.GREEN + "\nScan completed successfully. Check 'report.txt' for details.")
+
+if __name__ == "__main__":
+    main()
